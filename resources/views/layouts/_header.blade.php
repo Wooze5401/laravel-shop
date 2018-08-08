@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md  navbar-light">
+<nav class="navbar navbar-expand-md  navbar-default">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#app-navbar-collapse">
@@ -28,6 +28,9 @@
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="{{ route('user_addresses.index') }}">收货地址</a>
+                                </li>
                                 <li>
                                     <a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
