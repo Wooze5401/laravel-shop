@@ -11,7 +11,7 @@
         <div class="collapse show" id="app-navbar-collapse">
             <ul class="nav navbar-nav">
             </ul>
-            <ul class="nav navbar-nav pull-right">
+            <ul class="nav navbar-nav ">
                 @guest
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('login')}}">登录</a>
