@@ -53,7 +53,6 @@ class ProductsController extends Controller
             $favored = boolval($user->favoriteProducts()->find($product->id));
         }
 
-        var_dump($favored);
 
         return view('products.show', ['product' => $product, 'favored' => $favored]);
     }
@@ -75,5 +74,12 @@ class ProductsController extends Controller
         $user->favoriteProducts()->detach($product);
 
         return [];
+    }
+
+    public function favorites(Request $request)
+    {
+        $user = $request->user();
+        $products = $user->favoriteProducts()->paginate(16);
+        return view('products.favorites', ['products' => $products]);
     }
 }

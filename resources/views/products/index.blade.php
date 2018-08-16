@@ -20,7 +20,7 @@
                                 </div>
 
                                 <div class="form-group" style="margin-left: 10rem">
-                                    <select name="order" class="form-control input-sm">
+                                    <select name="order" class="form-control input-sm float-right">
                                         <option value="">排序方式</option>
                                         <option value="price_asc">价格从低到高</option>
                                         <option value="price_desc">价格从高到低</option>
@@ -41,7 +41,7 @@
                                     <div class="top">
                                         <div class="img">
                                             <a href="{{ route('products.show', ['product' => $product->id]) }}">
-                                                <img src="{{$product->image_url}}" alt="">
+                                                <img style="width: 100%; height: auto" src="{{$product->image_url}}" alt="">
                                             </a>
                                         </div>
                                         <div class="price"><b>￥</b>{{$product->price}}</div>

@@ -130,7 +130,9 @@
   }
 }
 
-.products-index-page {
+.products-index-page .products-favorites-page{
+
+
 
   .search-form {
     padding: 0 20px 10px;
@@ -147,9 +149,6 @@
         border: 1px solid;
         .top {
           padding: 5px;
-          img {
-            width: 100%;
-          }
           .price {
             margin-top: 5px;
             font-size: 20px;
