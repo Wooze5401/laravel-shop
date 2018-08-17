@@ -20,7 +20,10 @@
                         <a class="nav-link" href="{{route('register')}}">注册</a>
                     </li>
                     @else
-                        <li class="dropdown">
+                        <li class="nva-item">
+                            <a href="{{ route('cart.index') }}">购物车<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span></a>
+                        </li>
+                        <li class="nav-item dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                             <span class="user-avatar pull-left" style="margin-right:8px; margin-top:-5px;">
                                 <img src="https://fsdhubcdn.phphub.org/uploads/images/201709/20/1/PtDKbASVcz.png?imageView2/1/w/60/h/60" class="img-responsive img-circle" width="30px" height="30px">
@@ -46,6 +49,8 @@
                                 </li>
                             </ul>
                         </li>
+
+
                         @endguest
 
             </ul>
