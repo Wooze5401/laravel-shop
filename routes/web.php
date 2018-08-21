@@ -13,7 +13,6 @@
 
 Route::redirect('/', '/products')->name('root');
 Route::get('products', 'ProductsController@index')->name('products.index');
-Route::get('test', 'TestController@test');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/email_verify_notice', "PagesController@emailVerifyNotice")
