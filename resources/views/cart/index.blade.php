@@ -115,6 +115,51 @@
                    $(this).prop('checked', checked);
                })
             });
+
+            $('.btn-create-order').click(function () {
+                var req = {
+                    address_id: $('#order-form').find('select[name=address]').val(),
+                    items: [],
+                    remark: $('#order-form').find('textarea[name=remark]').val(),
+                };
+                $('table tr[data-id]').each(function () {
+                    var $checkbox = $(this).find('input[name=select][type=checkbox]');
+
+                    if ($checkbox.prop('disabled') || !$checkbox.prop('checked')) {
+                        return;
+                    }
+
+                    var $input = $(this).find('input[name=amount]');
+                    if ($input.val() == 0 || isNaN($input.val())) {
+                        return;
+                    }
+
+                    req.items.push({
+                        sku_id: $(this).data('id'),
+                        amount: $input.val(),
+                    })
+                });
+
+                axios.post('{{ route('orders.store') }}', req)
+                    .then(function (response) {
+                        swal('订单提交成功', '', 'success');
+                    }, function (error) {
+                        if (error.response.status === 422) {
+                            var html = '<div>';
+                            _.each(error.response.data.errors, function (errors) {
+                                _.each(errors, function (error) {
+                                    html += error+'<br>';
+                                })
+                            });
+                            html += '</div>';
+                            swal({content: $(html)[0], icon:'error'})
+
+                        } else {
+                            swal('系统错误', '', 'error');
+                        }
+                    })
+
+            })
         })
     </script>
 @endsection
