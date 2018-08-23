@@ -14,6 +14,16 @@ use Illuminate\Support\Facades\DB;
 
 class OrdersController extends Controller
 {
+    public function index(Request $request)
+    {
+        $orders = Order::query()
+            ->with(['items.product', 'items.productSku'])
+            ->where('user_id', $request->user()->id)
+            ->orderBy('created_at', 'desc')
+            ->paginate();
+        return view('orders.index', ['orders'=>$orders]);
+    }
+
     public function store(OrderRequest $request)
     {
         $user = $request->user();
@@ -66,4 +76,5 @@ class OrdersController extends Controller
         $this->dispatch(new CloseOrder($order, config('app.order_ttk')));
         return $order;
     }
+
 }
