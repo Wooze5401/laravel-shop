@@ -14,6 +14,14 @@
 Route::redirect('/', '/products')->name('root');
 Route::get('products', 'ProductsController@index')->name('products.index');
 
+Route::get('alipay', function () {
+    return app('alipay')->web([
+        'out_trade_no' => time(),
+        'total_amount' => '1',
+        'subject' => 'test subject - 测试',
+    ]);
+});
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/email_verify_notice', "PagesController@emailVerifyNotice")
         ->name("email_verify_notice");

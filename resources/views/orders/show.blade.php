@@ -4,11 +4,11 @@
 @section('content')
     <div class="row">
         <div class="col-lg-10 col-lg-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">
+            <div class="card">
+                <div class="card-header">
                     <h4>订单详情</h4>
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <table class="table">
                         <thead>
                         <tr>
