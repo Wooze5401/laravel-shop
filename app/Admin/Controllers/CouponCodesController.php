@@ -27,7 +27,54 @@ class CouponCodesController extends Controller
             ->body($this->grid());
     }
 
+    public function create(Content $content)
+    {
+        return $content
+            ->header('新增优惠券')
+            ->body($this->form());
+    }
 
+    public function edit(Content $content, $id)
+    {
+        return $content
+            ->header('编辑优惠券')
+            ->body($this->form()->edit($id));
+    }
+
+
+    protected function form()
+    {
+        $form = new Form(new Couponcode);
+
+        $form->display('id', 'ID');
+        $form->text('name', '名称')->rules('required');
+        $form->text('code', '优惠码')->rules(function ($form) {
+            if ($id = $form->model()->id) {
+                return 'nullable|unique:coupon_codes,code,'.$id.',id';
+            } else {
+                return 'nullable|unique:coupon_codes';
+            }
+        });
+        $form->radio('type', '类型')->options(CouponCode::$typeMap)->rules('required');
+        $form->text('value', '折扣')->rules(function ($form) {
+            if ($form->type === CouponCode::TYPE_PERCENT) {
+                return 'required|numeric|between:1,99';
+            } else {
+                return 'required|numeric|min:0.01';
+            }
+        });
+        $form->number('total', '总量')->rules('required|numeric|min:0');
+        $form->decimal('min_amount', '最底金额')->rules('required|numeric');
+        $form->datetime('not_before', '开始时间')->default(date('Y-m-d H:i:s'));
+        $form->datetime('not_after', '结束时间')->default(date('Y-m-d H:i:s'));
+        $form->radio('enabled', '启用')->options(['1' => '是', '0' => '否']);
+        $form->saving(function (Form $form) {
+            if (!$form->code) {
+                $form->code = CouponCode::findAvailableCode();
+            }
+        });
+        return $form;
+    }
 
 
 
