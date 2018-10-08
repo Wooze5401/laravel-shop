@@ -132,6 +132,7 @@
                     address_id: $('#order-form').find('select[name=address]').val(),
                     items: [],
                     remark: $('#order-form').find('textarea[name=remark]').val(),
+                    coupon_code: $('input[name=coupon_code]').val(), // 从优惠码输入框中获取优惠码
                 };
                 $('table tr[data-id]').each(function () {
                     var $checkbox = $(this).find('input[name=select][type=checkbox]');
@@ -168,6 +169,8 @@
                             html += '</div>';
                             swal({content: $(html)[0], icon:'error'})
 
+                        } else if (error.response.status === 422) {
+                            swal(error.response.data.msg, '', 'error');
                         } else {
                             swal('系统错误', '', 'error');
                         }
@@ -195,6 +198,7 @@
                             swal(error.response.data.msg, '', 'error');
                         } else {
                             // 其他错误
+//                            console.log(error.response.status);
                             swal('系统内部错误', '', 'error');
                         }
                     })
