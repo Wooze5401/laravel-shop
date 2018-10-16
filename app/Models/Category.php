@@ -56,9 +56,14 @@ class Category extends Model
 
     public function getFullNameAttribute()
     {
-        return $this->ancestors
-            ->pluck('name')
-            ->push($this->name)
-            ->implode('-');
+        if ($this->parent_id) {
+            return $this->ancestors
+                ->pluck('name')
+                ->push($this->name)
+                ->implode('-');
+        } else {
+            return $this->name;
+        }
+
     }
 }

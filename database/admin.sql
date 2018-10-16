@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.22, for Linux (x86_64)
 --
--- Host: localhost    Database: laravel-shop
+-- Host: 127.0.0.1    Database: laravel-shop
 -- ------------------------------------------------------
 -- Server version	5.7.22-0ubuntu18.04.1
 
@@ -21,7 +21,7 @@
 
 LOCK TABLES `admin_menu` WRITE;
 /*!40000 ALTER TABLE `admin_menu` DISABLE KEYS */;
-INSERT INTO `admin_menu` VALUES (1,0,1,'Index','fa-bar-chart','/',NULL,NULL),(2,0,2,'Admin','fa-tasks','',NULL,NULL),(3,2,3,'Users','fa-users','auth/users',NULL,NULL),(4,2,4,'Roles','fa-user','auth/roles',NULL,NULL),(5,2,5,'Permission','fa-ban','auth/permissions',NULL,NULL),(6,2,6,'Menu','fa-bars','auth/menu',NULL,NULL),(7,2,7,'Operation log','fa-history','auth/logs',NULL,NULL),(8,0,0,'User','fa-bars','/users','2018-08-08 07:07:29','2018-08-08 07:07:29'),(9,0,0,'商品管理','fa-cubes','/products','2018-08-08 09:23:07','2018-08-08 09:23:07'),(10,0,0,'订单管理','fa-bars','/orders','2018-08-28 08:44:07','2018-08-28 08:44:07'),(11,0,0,'优惠券管理','fa-bars','/coupon_codes','2018-09-12 06:39:35','2018-09-12 06:39:35');
+INSERT INTO `admin_menu` VALUES (1,0,1,'Index','fa-bar-chart','/',NULL,NULL),(2,0,2,'Admin','fa-tasks','',NULL,NULL),(3,2,3,'Users','fa-users','auth/users',NULL,NULL),(4,2,4,'Roles','fa-user','auth/roles',NULL,NULL),(5,2,5,'Permission','fa-ban','auth/permissions',NULL,NULL),(6,2,6,'Menu','fa-bars','auth/menu',NULL,NULL),(7,2,7,'Operation log','fa-history','auth/logs',NULL,NULL),(8,0,0,'User','fa-bars','/users','2018-08-08 07:07:29','2018-08-08 07:07:29'),(9,0,0,'商品管理','fa-cubes','/products','2018-08-08 09:23:07','2018-08-08 09:23:07'),(10,0,0,'订单管理','fa-bars','/orders','2018-08-28 08:44:07','2018-08-28 08:44:07'),(11,0,0,'优惠券管理','fa-bars','/coupon_codes','2018-09-12 06:39:35','2018-09-12 06:39:35'),(12,0,0,'类目管理','fa-bars','/categories','2018-10-16 03:14:36','2018-10-16 03:14:36');
 /*!40000 ALTER TABLE `admin_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -103,4 +103,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-08  3:15:59
+-- Dump completed on 2018-10-16  6:25:38
