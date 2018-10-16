@@ -67,7 +67,7 @@ class Order extends Model
             if (!$model->no) {
                 $model->no = static::findAvailableNo();
                 if (!$model->no) {
-                    return false;
+                     return false;
                 }
             }
         });
