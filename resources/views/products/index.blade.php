@@ -11,6 +11,19 @@
 
                     <div class="row">
                             <form action="{{route('products.index')}}" class="form-inline search-form">
+                                {{--面包屑--}}
+                                <a class="all-products" href="{{ route('products.index') }}">全部</a> &gt;
+                                @if ($category)
+                                    @foreach($category->ancestors as $ancestor)
+                                        <span class="category">
+                                            <a href="{{ route('products.index', ['category_id' => $ancestor->id]) }}">{{ $ancestor->name }}</a>
+                                        </span>
+                                        <span>&gt</span>
+                                    @endforeach
+                                        <span class="category">{{ $category->name }}</span><span>&gt</span>
+                                        <!-- 当前类目的 ID，当用户调整排序方式时，可以保证 category_id 参数不丢失 -->
+                                        <input type="hidden" name="category_id" value="{{ $category->id }}">
+                                @endif
                                 <div class="form-group">
                                     <input type="text" class="form-control input-sm" name="search" placeholder="搜索">
                                 </div>
@@ -32,6 +45,19 @@
                                 </div>
                             </form>
 
+                    </div>
+
+                    <div class="filters">
+                        @if ($category && $category->is_directory)
+                            <div class="row">
+                                <div class="col-xs-3 filter-key">子类目：</div>
+                                <div class="col-xs-9 filter-values">
+                                    @foreach($category->children as $child)
+                                        <a href="{{ route('products.index', ['category_id' => $child->id]) }}">{{ $child->name }}</a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endif
                     </div>
 
                     <div class="row products-list">

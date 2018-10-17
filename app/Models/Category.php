@@ -49,21 +49,21 @@ class Category extends Model
     public function getAncestorsAttribute()
     {
         return Category::query()
-            ->where('id', $this->path_ids)
+            ->whereIn('id', $this->path_ids)
             ->orderBy('level')
             ->get();
     }
 
     public function getFullNameAttribute()
     {
-        if ($this->parent_id) {
-            return $this->ancestors
-                ->pluck('name')
-                ->push($this->name)
-                ->implode('-');
-        } else {
-            return $this->name;
-        }
+//        return json_encode($this->ancestors);
+        return $this->ancestors
+            ->pluck('name')
+            ->push($this->name)
+            ->implode('-');
+//        } else {
+//            return $this->name;
+//        }
 
     }
 }
