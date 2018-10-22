@@ -28,6 +28,7 @@ class OrderService
             $address->update(['last_used_at' => Carbon::now()]);
 
             $order = new Order([
+                'type' => Order::TYPE_NORMAL,
                 'address' => [
                     'address'       => $address->full_address,
                     'zip'           => $address->zip,
@@ -93,6 +94,7 @@ class OrderService
             $address->update(['last_used_at' => Carbon::now()]);
 
             $order = new Order([
+                'type' => Order::TYPE_CROWDFUNDING,
                 'address' => [
                     'address' => $address->full_address,
                     'zip' => $address->zip,
@@ -124,7 +126,7 @@ class OrderService
             return $order;
         });
 
-        $crowdfundingTtl = $sku->product->crowdfunding->end_at->getTimesamp() - time();
+        $crowdfundingTtl = $sku->product->crowdfunding->end_at->getTimestamp() - time();
 
         // 剩余秒数与默认订单关闭时间取较小值作为订单关闭时间，即
         dispatch(new CloseOrder($order, min(config('app.order_ttl'), $crowdfundingTtl)));

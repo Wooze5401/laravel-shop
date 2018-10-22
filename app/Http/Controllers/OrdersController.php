@@ -107,7 +107,6 @@ class OrdersController extends Controller
         $amount = $request->input('amount');
 
         return $orderService->crowdfunding($user, $address, $sku, $amount);
-
     }
 
     public function show(Order $order)
@@ -179,6 +178,10 @@ class OrdersController extends Controller
 
         if (!$order->paid_at) {
             throw new InvalidRequestException('该订单未支付');
+        }
+
+        if ($order->type === Order::TYPE_CROWDFUNDING) {
+            throw new InvalidRequestException('众筹订单不支持退款');
         }
 
         // 判断订单退款状态是否正确
