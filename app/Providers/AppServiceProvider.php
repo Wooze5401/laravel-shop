@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton('alipay', function () {
             $config = config('pay.alipay');
-            $config['notify_url'] = 'http://requestbin.leo108.com/1k8587b1';
+            $config['notify_url'] = ngrok_url('payment.alipay.notify');
             $config['return_url'] = route('payment.alipay.return');
 
             if (app()->environment() !== 'production') {
@@ -45,7 +45,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->singleton('wechat_pay', function () {
             $config = config('pay.wechat');
-            $config['notify_url'] = 'http://requestbin.fullcontact.com/[替换成你自己的url]';
+            $config['notify_url'] = ngrok_url('payment.wechat.notify');
 
             if (app()->environment() !== 'production') {
                 $config['mode'] = 'dev';

@@ -213,4 +213,6 @@ return [
     ],
 
     'order_ttl' => 30,
+
+    'ngrok_url' => env('NGROK_URL'),
 ];

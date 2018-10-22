@@ -4,7 +4,12 @@ function route_class()
     return str_replace('.', '-', Route::currentRouteName());
 }
 
-function test()
+
+function ngrok_url($routeName, $parameters = [])
 {
-    return 'OK11';
+    if (app()->environment('local') && $url = config('app.ngrok_url')) {
+        return $url.route($routeName, $parameters, false);
+    }
+
+    return route($routeName, $parameters);
 }
