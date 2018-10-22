@@ -36,7 +36,7 @@ class CrowdfundingProductsController extends CommonProductController
         $grid->column('crowdfunding.end_at', '结束时间');
         $grid->column('crowdfunding.total_amount', '目前金额');
         $grid->column('crowdfunding.status', '状态')->display(function ($value) {
-            return CrowdfundingProduct::$staticMap[$value];
+            return CrowdfundingProduct::$statusMap[$value];
         });
     }
 
