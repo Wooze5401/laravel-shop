@@ -6,6 +6,7 @@ use App\Jobs\RefundCrowdfundingOrders;
 use App\Models\CrowdfundingProduct;
 use App\Models\Order;
 use App\Services\OrderService;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 
 class FinishCrowdfunding extends Command
@@ -15,7 +16,7 @@ class FinishCrowdfunding extends Command
      *
      * @var string
      */
-    protected $signature = 'command:finish-crowdfunding';
+    protected $signature = 'cron:finish-crowdfunding';
 
     /**
      * The console command description.
@@ -23,16 +24,6 @@ class FinishCrowdfunding extends Command
      * @var string
      */
     protected $description = '结束众筹';
-
-    /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
 
     /**
      * Execute the console command.
@@ -43,7 +34,8 @@ class FinishCrowdfunding extends Command
     {
         CrowdfundingProduct::query()
             ->with('product')
-            ->where('end_at', CrowdfundingProduct::STATUS_FUNDING)
+            ->where('end_at', '<=', Carbon::now())
+            ->where('status', CrowdfundingProduct::STATUS_FUNDING)
             ->get()
             ->each(function (CrowdfundingProduct $crowdfunding) {
                 if ($crowdfunding->target_amount > $crowdfunding->total_amount) {

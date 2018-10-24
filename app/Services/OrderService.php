@@ -98,8 +98,8 @@ class OrderService
                 'address' => [
                     'address' => $address->full_address,
                     'zip' => $address->zip,
-                    'contract_name' => $address->contact_name,
-                    'contract_phone' => $address->contract_phone,
+                    'contact_name' => $address->contact_name,
+                    'contact_phone' => $address->contract_phone,
                 ],
                 'remark' => '',
                 'total_amount' => $sku->price * $amount,
