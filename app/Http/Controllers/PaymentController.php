@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Events\OrderPaid;
 use App\Exceptions\InvalidRequestException;
+use App\Models\Installment;
 use App\Models\Order;
 use Carbon\Carbon;
 use Endroid\QrCode\QrCode;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PaymentController extends Controller
 {
@@ -133,6 +135,69 @@ class PaymentController extends Controller
         }
 
         return app('wechat_pay')->success();
+    }
+
+    public function payByInstallment(Order $order, Request $request)
+    {
+        $this->authorize('own', $order);
+        // 订单已支付或者已关闭
+        if ($order->paid_at || $order->closed) {
+            throw new InvalidRequestException('订单状态不正确');
+        }
+
+        $this->validate($request, [
+            'count' => ['required', Rule::in(array_keys(config('app.installment_fee_rate')))],
+        ]);
+
+        Installment::query()
+            ->where('order_id', $order->id)
+            ->where('status', Installment::STATUS_PENDING)
+            ->delete();
+
+        $count = $request->input('count');
+
+        $installment = new Installment([
+            // 商品总金额
+            'total_amount' => $order->total_amount,
+            // 分期期数
+            'count' => $count,
+
+            'fee_rate' => config('app.installment_fee_rate')[$count],
+
+            'fine_rate' => config('app.installment_fine_rate'),
+        ]);
+
+        $installment->user()->associate($request->user());
+
+        $installment->order()->associate($order);
+
+        $installment->save();
+
+        // 第一期的还款截止日期为明天凌晨 0 点
+        $dueDate = Carbon::tomorrow();
+
+        //计算每一期的本金
+        $base = big_number($order->total_amount)->divide($count)->getValue();
+        //计算每一期的手续费
+        $fee = big_number($base)->multiply($installment->fee_rate)->divide(100)->getValue();
+
+        for ($i =0; $i < $count; $i++) {
+            //最后一期的本金需要用总本金减去前面几期的本金
+            if ($i === $count-1) {
+                $base = big_number($order->total_amount)->subtract(big_number($base)->multiply($count-1))->getValue();
+            }
+            $installment->items()->create([
+               'sequence' => $i,
+               'base' => $base,
+               'fee' => $fee,
+               'due_date' => $dueDate,
+            ]);
+
+            //还款日期加30天
+            $dueDate = $dueDate->copy()->addDays(30);
+        }
+
+        return $installment;
     }
 
     protected function afterPaid(Order $order)
