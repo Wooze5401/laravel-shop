@@ -65,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Shanghai',
 
     /*
     |--------------------------------------------------------------------------
@@ -212,7 +212,7 @@ return [
 
     ],
 
-    'order_ttl' => 30,
+    'order_ttl' => 300,
 
     'ngrok_url' => env('NGROK_URL'),
 

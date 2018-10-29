@@ -49,7 +49,7 @@
                                     <span>截止日期：</span>
                                     <div class="value">{{ $nextItem->due_date->format('Y-m-d') }}</div>
                                     <div class="payment-buttons">
-                                        <a class="btn btn-primary btn-sm" href="">支付宝支付</a>
+                                        <a class="btn btn-primary btn-sm" href="{{ route('installments.alipay', ['installment' => $installment->id]) }}">支付宝支付</a>
                                         <button class="btn btn-sm btn-success" id='btn-wechat'>微信支付</button>
                                     </div>
                                 </div>
