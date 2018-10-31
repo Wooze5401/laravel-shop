@@ -26,6 +26,11 @@ class Product extends Model
         'on_sale' => 'boolean', // on_sale 是一个布尔类型的字段
     ];
 
+    public function properties()
+    {
+        return $this->hasMany(ProductProperty::class);
+    }
+
     public function skus()
     {
         return $this->hasMany(ProductSku::class);
@@ -47,5 +52,14 @@ class Product extends Model
     public function crowdfunding()
     {
         return $this->hasOne(CrowdfundingProduct::class);
+    }
+
+    public function getGroupedPropertiesAttribute()
+    {
+        return $this->properties
+            ->groupBy('name')
+            ->map(function ($properties) {
+                return $properties->pluck('value')->all();
+            });
     }
 }
