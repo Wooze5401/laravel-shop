@@ -117,4 +117,9 @@ return [
 
     ],
 
+    'elasticsearch' => [
+        //支持负载均衡
+        'hosts' => explode(',', env('ES_HOSTS')),
+    ]
+
 ];
