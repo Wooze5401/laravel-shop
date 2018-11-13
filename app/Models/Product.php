@@ -90,11 +90,16 @@ class Product extends Model
 
         $arr['properties'] = $this->properties->map(function (ProductProperty $property) {
             return array_merge(array_only($property->toArray(), ['name', 'value']), [
-                'search_value' => $property->name.':',$property->value,
+                'search_value' => $property->name.':'.$property->value,
             ]);
 //            return array_only($property->toArray(), ['name', 'value']);
         });
 
         return $arr;
+    }
+
+    public function scopeByIds($query, $ids)
+    {
+        return $query->whereIn('id', $ids)->orderByRaw(sprintf("FIND_IN_SET('id', '%s')", join(',', $ids)));
     }
 }
